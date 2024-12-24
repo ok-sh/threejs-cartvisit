@@ -1,0 +1,11 @@
+Model Information:
+* title:	Room props
+* source:	https://sketchfab.com/3d-models/room-props-8bfdcc17e6d04d2594536a35b87ea5b1
+* author:	Bansheeva (https://sketchfab.com/Bansheeva)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Room props" (https://sketchfab.com/3d-models/room-props-8bfdcc17e6d04d2594536a35b87ea5b1) by Bansheeva (https://sketchfab.com/Bansheeva) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
