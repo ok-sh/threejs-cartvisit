@@ -49,15 +49,12 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
-  netcup:
-    runs-on: ubuntu-latest
 
-    steps:
       - name: Deploy over FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
-          server: hosting128857.a2e0a.netcup.net
+          server: ${{ secrets.NETCUP_SERVER }}
           username: ${{ secrets.NETCUP_USERNAME }}
           password: ${{ secrets.NETCUP_PASSWORD }}
           server-dir: /ok-sahin-new
-          local-dir: ./dist
+          local-dir: ./dist/
