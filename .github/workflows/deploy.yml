@@ -56,5 +56,5 @@ jobs:
           server: ${{ secrets.NETCUP_SERVER }}
           username: ${{ secrets.NETCUP_USERNAME }}
           password: ${{ secrets.NETCUP_PASSWORD }}
-          server-dir: /ok-sahin-new
+          server-dir: /ok-sahin-new/
           local-dir: ./dist/
