@@ -50,7 +50,7 @@ jobs:
         id: deployment
         uses: actions/deploy-pages@v4
 
-      - name: Deploy over FTP
+      - name: Deploy on Netcup over FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
           server: ${{ secrets.NETCUP_SERVER }}
