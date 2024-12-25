@@ -58,3 +58,4 @@ jobs:
           password: ${{ secrets.NETCUP_PASSWORD }}
           server-dir: ~/ok-sahin-new/
           local-dir: ./dist/
+          dry-run: false
