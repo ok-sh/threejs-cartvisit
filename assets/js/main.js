@@ -5,6 +5,9 @@ import { setupRenderer } from './scene/renderer.js';
 import { setupControls } from './scene/controls.js';
 import { createObjects } from './objects/objects.js';
 import { onInteractionStart, onResize } from './utils/eventHandlers.js';
+import { setupKeyboardControls } from './utils/keyboardControls.js';
+import { setupInfoBox } from './utils/infoBox.js';
+import * as THREE from 'three';
 import gsap from 'gsap';
 
 function init() {
@@ -13,6 +16,7 @@ function init() {
   const renderer = setupRenderer(container);
   const controls = setupControls(camera, renderer);
   const groupCubes = createObjects();
+  const updateCameraPosition = setupKeyboardControls(camera);
   
   setupLights(scene);
   scene.add(groupCubes);
@@ -25,14 +29,23 @@ function init() {
   window.addEventListener('touchstart', (e) => onInteractionStart(e, groupCubes), { passive: false });
   window.addEventListener('resize', () => onResize(camera, renderer));
   
+  setupInfoBox();
+  
+  let lastTime = 0;
   // Animation loop
-  function animate() {
+  function animate(currentTime) {
     requestAnimationFrame(animate);
+    
+    // Calculate delta time
+    const deltaTime = (currentTime - lastTime) / 1000;
+    lastTime = currentTime;
+    
+    updateCameraPosition();
     controls.update();
     renderer.render(scene, camera);
   }
   
-  animate();
+  animate(0);
 }
 
 init(); 

@@ -1,12 +1,12 @@
 * {
   margin: 0;
 }
+
 html {
   margin: 0;
   width: 100%;
   height: 100%;
-  /* background-image: linear-gradient(to bottom right, #000 0, #193e4c 44%, #808080 100%); */
-  background-color: #ffffff;
+  background-image: linear-gradient(to bottom right, #000 0, #193e4c 44%, #808080 100%);
   color: #000000;
   font-family: sans-serif;
   font-style: normal;
@@ -19,59 +19,154 @@ body {
 }
 
 .container {
-  margin: auto;
+  width: 100%;
   height: 100vh;
-  padding: 0;
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
+  position: relative;
 }
 
 .the-box {
-  position: absolute;
-  padding: 1rem;
-  border-radius: 4px;
-  width: 0%;
+  background: rgba(78, 131, 151, 0.1);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  padding: 1.5rem;
+  max-width: 400px;
+  margin: 2rem;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  transition: all 0.3s ease;
 }
 
 .text {
-  font-size: 1em;
-  text-align: left;
-  width: 300px;
+  color: white;
+  font-family: 'Kanit', sans-serif;
+  line-height: 1.5;
+  margin-bottom: 1.2rem;
 }
 
-.model-container {
-  width: 100%;
+.text div[style*="font-size: 48px"] {
+  font-size: 36px !important;
+}
+
+.text div[style*="font-size: 18px"] {
+  font-size: 16px !important;
 }
 
 .button {
   display: inline-block;
-  padding: 8px 16px;
-  margin: 8px 0;
-  border: 2px rgb(0, 0, 0) solid;
-  border-radius: 4px;
-  color: rgb(0, 0, 0);
+  padding: 0.7rem 1.8rem;
+  background: rgba(78, 131, 151, 0.9);
+  color: white;
   text-decoration: none;
+  border-radius: 8px;
+  font-family: 'Kanit', sans-serif;
+  transition: all 0.3s ease;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  font-size: 0.9em;
 }
 
 .button:hover {
-  background-color: #000;
-  color: #fff;
+  background: rgba(78, 131, 151, 1);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(78, 131, 151, 0.3);
 }
 
-  .model-container {
-    position: absolute;
-    top: 0;
+.model-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}
+
+/* Controls info only shown on desktop */
+.controls-info {
+  display: none;
+}
+
+@media screen and (min-width: 768px) {
+  .controls-info {
+    display: block;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: rgba(78, 131, 151, 0.9);
+    padding: 15px 20px;
+    border-radius: 12px;
+    color: white;
+    font-family: 'Kanit', sans-serif;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: opacity 0.3s ease;
+    z-index: 1000;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .the-box {
+    top: auto;
     bottom: 0;
     left: 0;
     right: 0;
-    width: 100%;
+    margin: 1rem;
+    padding: 1rem;
+    max-width: none;
+    width: auto;
+    border-radius: 12px;
   }
 
-  .the-box {
-    margin-left: 1rem;
-    background-color: #ffffffd3;
-    width: auto;
-    z-index: 10;
+  .text div[style*="font-size: 48px"] {
+    font-size: 28px !important;
+    margin-bottom: 0.5rem !important;
   }
+
+  .text div[style*="font-size: 18px"] {
+    font-size: 14px !important;
+  }
+
+  .text {
+    margin-bottom: 0.8rem;
+  }
+
+  .button {
+    padding: 0.5rem 1.2rem;
+    font-size: 0.85em;
+  }
+}
+
+.controls-info.fade {
+  opacity: 0.2;
+}
+
+.controls-info:hover {
+  opacity: 1;
+}
+
+.key {
+  display: inline-block;
+  background: rgba(255, 255, 255, 0.2);
+  padding: 4px 8px;
+  border-radius: 6px;
+  margin: 0 2px;
+  font-size: 0.9em;
+  min-width: 20px;
+  text-align: center;
+}
+
+.controls-row {
+  margin: 8px 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.controls-title {
+  font-size: 1.1em;
+  margin-bottom: 10px;
+  opacity: 0.9;
+}
 
