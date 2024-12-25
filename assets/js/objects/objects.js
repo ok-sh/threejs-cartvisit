@@ -2,7 +2,7 @@ import * as THREE from 'three';
 
 export function createObjects() {
   const groupCubes = new THREE.Group();
-  const geometry = new THREE.SphereGeometry(0.5, 32, 32);
+  const geometry = new THREE.BoxGeometry(1, 1, 1);
   const material = new THREE.MeshMatcapMaterial({ color: 0x4e8397 });
   const radius = 80;
   const totalCubes = 180;
