@@ -51,14 +51,4 @@ jobs:
         id: deployment
         uses: actions/deploy-pages@v4
 
-      - name: Deploy on Netcup over FTP
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
-        env:
-          DEPLOY_ENV: ftp
-        with:
-          server: ${{ secrets.NETCUP_SERVER }}
-          username: ${{ secrets.NETCUP_USERNAME }}
-          password: ${{ secrets.NETCUP_PASSWORD }}
-          server-dir: /ok-sahin-new/
-          local-dir: ./dist/
-          dry-run: false
+
