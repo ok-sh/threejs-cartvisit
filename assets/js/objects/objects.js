@@ -2,10 +2,11 @@ import * as THREE from 'three';
 
 export function createObjects() {
   const groupCubes = new THREE.Group();
-  const geometry = new THREE.BoxGeometry(2, 2, 2);
+  const cubeSize = 3;
+  const geometry = new THREE.BoxGeometry(cubeSize, cubeSize, cubeSize);
   const material = new THREE.MeshMatcapMaterial({ color: 0x4e8397 });
-  const radius = 700;
-  const totalCubes = 500;
+  const radius = 900;
+  const totalCubes = 600;
   const randomCubeCount = 150;
 
   // Add objects on the sphere's surface
