@@ -31,7 +31,7 @@ body {
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 16px;
   padding: 1.5rem;
-  max-width: 400px;
+  max-width: 300px;
   margin: 2rem;
   position: fixed;
   top: 0;
@@ -55,9 +55,9 @@ body {
   font-size: 16px !important;
 }
 
-.button {
+.contact-me-button {
   display: inline-block;
-  padding: 0.7rem 1.8rem;
+  padding: 0.5rem 1rem;
   background: rgba(78, 131, 151, 0.9);
   color: white;
   text-decoration: none;
@@ -68,7 +68,7 @@ body {
   font-size: 0.9em;
 }
 
-.button:hover {
+.contact-me-button:hover {
   background: rgba(78, 131, 151, 1);
   transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(78, 131, 151, 0.3);
@@ -132,7 +132,7 @@ body {
     margin-bottom: 0.8rem;
   }
 
-  .button {
+  .contact-me-button {
     padding: 0.5rem 1.2rem;
     font-size: 0.85em;
   }
@@ -199,17 +199,16 @@ body {
     fill: white;
 }
 
-/* Add these styles */
 .text .title {
-    font-size: 48px;
+    font-size: 30px;
     font-weight: 900;
     color: #ffffff;
-    margin-bottom: 1rem;
+    margin-bottom: .5rem;
     letter-spacing: -1px;
 }
 
 .text .description {
-    font-size: 18px;
+    font-size: 16px;
     opacity: 0.9;
 }
 
