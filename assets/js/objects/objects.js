@@ -25,7 +25,7 @@ export function createObjects() {
 
   // Add random objects inside the sphere
   for (let i = 0; i < randomCubeCount; i++) {
-    const object = new THREE.Mesh(geometry, material);
+    const object = new THREE.Mesh(geometry, material.clone());
     const randomRadius = Math.random() * radius;
     const randomTheta = Math.acos(2 * Math.random() - 1);
     const randomPhi = Math.random() * 2 * Math.PI;

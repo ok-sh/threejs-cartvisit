@@ -5,8 +5,7 @@ export function setupControls(camera, renderer) {
   controls.enableDamping = true;
   controls.dampingFactor = 0.05;
   controls.screenSpacePanning = false;
-  controls.minDistance = 10;
-  controls.maxDistance = 500;
+  controls.maxDistance = 100000;
   controls.maxPolarAngle = Math.PI;
   
   return controls;
