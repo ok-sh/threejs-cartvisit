@@ -4,6 +4,7 @@ class SoundManager {
     constructor() {
         this.sound = null;
         this.isPlaying = false;
+        this.clickSound = null;
     }
 
     async init() {
@@ -20,6 +21,12 @@ class SoundManager {
                 onloaderror: (id, error) => {
                     console.error('Error loading sound:', error);
                 }
+            });
+
+            this.clickSound = new Howl({
+                src: ['/sounds/click.wav'],
+                volume: 0.3,
+                preload: true
             });
         } catch (error) {
             console.error('Error initializing audio:', error);
@@ -81,6 +88,16 @@ class SoundManager {
             } catch (error) {
                 console.error('Error stopping audio:', error);
             }
+        }
+    }
+
+    playClick() {
+        if (this.clickSound) {
+            this.clickSound.play();
+        } else {
+            this.init().then(() => {
+                this.clickSound.play();
+            });
         }
     }
 }

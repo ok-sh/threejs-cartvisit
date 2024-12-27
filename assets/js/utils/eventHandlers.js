@@ -1,10 +1,13 @@
 import * as THREE from 'three';
 import gsap from 'gsap';
+import { soundManager } from './sound.js';
 
 // Global variables
 const raycaster = new THREE.Raycaster();
 const mouse = new THREE.Vector2();
 let INTERSECTED = null;
+const DEFAULT_COLOR = new THREE.Color(0x4e8397);
+const HOVER_BRIGHTNESS = 1.5; // Multiplier for hover brightness
 
 export function onMouseMove(event, camera, groupCubes) {
     event.preventDefault();
@@ -26,29 +29,38 @@ export function onMouseMove(event, camera, groupCubes) {
         
         if (INTERSECTED !== hoveredObject) {
             if (INTERSECTED) {
+                // Restore previous color (base color or clicked color)
+                const baseColor = INTERSECTED.userData.clickedColor || DEFAULT_COLOR;
                 gsap.to(INTERSECTED.material.color, {
-                    r: 0.306,
-                    g: 0.514,
-                    b: 0.592,
+                    r: baseColor.r,
+                    g: baseColor.g,
+                    b: baseColor.b,
                     duration: 0.3
                 });
             }
             
             INTERSECTED = hoveredObject;
             
+            // Store current color before hover
+            const currentColor = INTERSECTED.userData.clickedColor || DEFAULT_COLOR;
+            // Make it brighter for hover effect
+            const brighterColor = currentColor.clone().multiplyScalar(HOVER_BRIGHTNESS);
+            
             gsap.to(INTERSECTED.material.color, {
-                r: 0.8,
-                g: 0.9,
-                b: 1.0,
+                r: brighterColor.r,
+                g: brighterColor.g,
+                b: brighterColor.b,
                 duration: 0.3
             });
         }
     } else {
         if (INTERSECTED) {
+            // Restore previous color (base color or clicked color)
+            const baseColor = INTERSECTED.userData.clickedColor || DEFAULT_COLOR;
             gsap.to(INTERSECTED.material.color, {
-                r: 0.306,
-                g: 0.514,
-                b: 0.592,
+                r: baseColor.r,
+                g: baseColor.g,
+                b: baseColor.b,
                 duration: 0.3
             });
             INTERSECTED = null;
@@ -76,13 +88,11 @@ export function onInteractionStart(event, camera, groupCubes) {
         mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
     }
     
-    // Update the picking ray with the camera and mouse position
     raycaster.setFromCamera(mouse, camera);
-    
-    // Calculate objects intersecting the picking ray
     const intersects = raycaster.intersectObjects(groupCubes.children);
     
     if (intersects.length > 0) {
+        soundManager.playClick();
         const cube = intersects[0].object;
         const scaleFactor = isLeftClick ? 1.1 : 0.9;
         
@@ -96,6 +106,9 @@ export function onInteractionStart(event, camera, groupCubes) {
         if (cube.material && cube.material.color) {
             const randomColor = new THREE.Color(Math.random(), Math.random(), Math.random());
             const pastelColor = randomColor.lerp(new THREE.Color(1, 1, 1), 0.3);
+            
+            // Store the clicked color in the cube's userData
+            cube.userData.clickedColor = pastelColor;
 
             gsap.to(cube.material.color, {
                 r: pastelColor.r,

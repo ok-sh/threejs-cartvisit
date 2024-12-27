@@ -7,7 +7,7 @@ export function createObjects() {
   const material = new THREE.MeshMatcapMaterial({ color: 0x4e8397 });
   const radius = 900;
   const totalCubes = 600;
-  const randomCubeCount = 150;
+  const randomCubeCount = 200;
 
   // Add objects on the sphere's surface
   for (let i = 0; i < totalCubes; i++) {

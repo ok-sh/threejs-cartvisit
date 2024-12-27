@@ -44,8 +44,6 @@ function init() {
     function animate(currentTime) {
         requestAnimationFrame(animate);
         
-        // Calculate delta time
-        const deltaTime = (currentTime - lastTime) / 1000;
         lastTime = currentTime;
         
         updateCameraPosition();
