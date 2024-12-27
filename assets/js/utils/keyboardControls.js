@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 
 export function setupKeyboardControls(camera, controls) {
-  const moveSpeed = 2.0;
+  const moveSpeed = 3.0;
   const keysPressed = {};
 
   window.addEventListener('keydown', (event) => {
@@ -46,7 +46,7 @@ export function setupKeyboardControls(camera, controls) {
     if (keysPressed[' ']) { // Space key
       movement.y += moveSpeed;
     }
-    if (keysPressed['Shift']) {
+    if (keysPressed['Control'] || keysPressed['ctrl']) {
       movement.y -= moveSpeed;
     }
 
