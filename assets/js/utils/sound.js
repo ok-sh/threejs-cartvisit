@@ -33,7 +33,7 @@ class SoundManager {
             }
 
             if (this.isPlaying) {
-                this.stop();
+                this.pause();
             } else {
                 this.play();
             }
@@ -49,10 +49,27 @@ class SoundManager {
         if (!this.sound || this.isPlaying) return;
         
         try {
-            this.sound.play();
+            if (this.sound.seek() > 0) {
+                // Resume from where it was paused
+                this.sound.play();
+            } else {
+                // Start from beginning if it's the first play
+                this.sound.play();
+            }
             this.isPlaying = true;
         } catch (error) {
             console.error('Error playing audio:', error);
+        }
+    }
+
+    pause() {
+        if (this.sound) {
+            try {
+                this.sound.pause();
+                this.isPlaying = false;
+            } catch (error) {
+                console.error('Error pausing audio:', error);
+            }
         }
     }
 
