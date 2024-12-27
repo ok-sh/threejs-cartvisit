@@ -94,7 +94,7 @@ export function onInteractionStart(event, camera, groupCubes) {
     if (intersects.length > 0) {
         soundManager.playClick();
         const cube = intersects[0].object;
-        const scaleFactor = isLeftClick ? 1.1 : 0.9;
+        const scaleFactor = isLeftClick ? 1.2 : 0.8;
         
         gsap.to(cube.scale, {
             x: cube.scale.x * scaleFactor,
