@@ -17,7 +17,7 @@ function init() {
     const renderer = setupRenderer(modelContainer);
     const controls = setupControls(camera, renderer);
     const groupCubes = createObjects();
-    const updateCameraPosition = setupKeyboardControls(camera);
+    const updateCameraPosition = setupKeyboardControls(camera, controls);
     
     setupLights(scene);
     scene.add(groupCubes);

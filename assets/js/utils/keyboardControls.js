@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 
-export function setupKeyboardControls(camera) {
+export function setupKeyboardControls(camera, controls) {
   const moveSpeed = 2.0;
   const keysPressed = {};
 
@@ -16,40 +16,45 @@ export function setupKeyboardControls(camera) {
   });
 
   function updateCamera() {
-    // Create a normalized direction vector for forward movement
-    const direction = new THREE.Vector3();
-    camera.getWorldDirection(direction);
-    direction.normalize();
-
-    // Create a normalized right vector
+    // Get the camera's forward and right vectors
+    const forward = new THREE.Vector3();
     const right = new THREE.Vector3();
-    right.crossVectors(direction, camera.up).normalize();
-
-    // Movement speed this frame
-    const currentSpeed = moveSpeed;
+    
+    camera.getWorldDirection(forward);
+    right.crossVectors(forward, camera.up).normalize();
+    
+    // Calculate movement based on pressed keys
+    const movement = new THREE.Vector3(0, 0, 0);
 
     // Forward/Backward
     if (keysPressed['ArrowUp'] || keysPressed['w']) {
-      camera.translateZ(-currentSpeed);
+      movement.add(forward.clone().multiplyScalar(moveSpeed));
     }
     if (keysPressed['ArrowDown'] || keysPressed['s']) {
-      camera.translateZ(currentSpeed);
+      movement.add(forward.clone().multiplyScalar(-moveSpeed));
     }
 
     // Left/Right
     if (keysPressed['ArrowLeft'] || keysPressed['a']) {
-      camera.translateX(-currentSpeed);
+      movement.add(right.clone().multiplyScalar(-moveSpeed));
     }
     if (keysPressed['ArrowRight'] || keysPressed['d']) {
-      camera.translateX(currentSpeed);
+      movement.add(right.clone().multiplyScalar(moveSpeed));
     }
 
     // Up/Down
     if (keysPressed[' ']) { // Space key
-      camera.translateY(currentSpeed);
+      movement.y += moveSpeed;
     }
     if (keysPressed['Shift']) {
-      camera.translateY(-currentSpeed);
+      movement.y -= moveSpeed;
+    }
+
+    // Apply movement using controls
+    if (movement.length() > 0) {
+      controls.target.add(movement);
+      camera.position.add(movement);
+      controls.update();
     }
   }
 
