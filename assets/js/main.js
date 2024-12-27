@@ -23,7 +23,19 @@ function init() {
     scene.add(groupCubes);
     
     // Animation
-    gsap.from(groupCubes.rotation, { duration: 100, y: Math.PI * 2, repeat: -1 });
+    const rotationTimeline = gsap.timeline({
+        repeat: -1
+    });
+    
+    
+    rotationTimeline.from(groupCubes.rotation, {
+        duration: 100,
+        y: Math.PI * 2,
+        ease: "none",
+        repeat: -1
+    });
+
+
     
     // Event listeners
     const canvas = renderer.domElement;
@@ -51,10 +63,20 @@ function init() {
         renderer.render(scene, camera);
     }
     
-    // Add sound toggle event listener
+    // Add sound toggle event listener with animation speed change
     const soundToggle = document.getElementById('soundToggle');
     if (soundToggle) {
-        soundToggle.addEventListener('click', () => soundManager.toggle());
+        soundToggle.addEventListener('click', async () => {
+            await soundManager.toggle();
+            // Change animation speed based on sound state
+            if (!soundManager.isPlaying) {
+                rotationTimeline.timeScale(1) // Normal speed when sound is paused
+                console.log('Normal speed playing');
+            } else {
+                rotationTimeline.timeScale(18); 
+                console.log('Faster speed');
+            }
+        });
     }
     
     animate(0);
