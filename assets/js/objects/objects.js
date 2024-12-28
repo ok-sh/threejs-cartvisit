@@ -62,7 +62,7 @@ export function createObjects() {
   // Create a promise to load the robot
   const robotPromise = new Promise((resolve) => {
     const loader = new GLTFLoader();
-    loader.load('/models/robot/scene.gltf', (gltf) => {
+    loader.load('/assets/models/robot/scene.gltf', (gltf) => {
       const robot = gltf.scene;
       console.log('Robot model loaded successfully');
       

@@ -58,5 +58,5 @@ export function setupKeyboardControls(camera, controls) {
     }
   }
 
-  return updateCamera;
+  return { updateCamera, getKeysPressed: () => keysPressed };
 } 

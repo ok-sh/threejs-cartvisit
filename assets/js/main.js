@@ -20,7 +20,7 @@ async function init() {
     const { groupCubes, robotPromise } = createObjects();
     let hasMovedFirstTime = false;
     let robot = null;
-    const updateCameraPosition = setupKeyboardControls(camera, controls);
+    const { updateCamera, getKeysPressed } = setupKeyboardControls(camera, controls);
     
     setupLights(scene);
     scene.add(groupCubes);
@@ -139,6 +139,33 @@ async function init() {
                 targetPosition.add(cameraDirection.multiplyScalar(50)); 
                 targetPosition.y = camera.position.y - 1;
                 
+                // Get movement direction
+                const movementDirection = new THREE.Vector3();
+                const keysPressed = getKeysPressed();
+                if (keysPressed['ArrowUp'] || keysPressed['w']) {
+                    movementDirection.z = -1; // Forward
+                } else if (keysPressed['ArrowDown'] || keysPressed['s']) {
+                    movementDirection.z = 1; // Backward
+                }
+                
+                if (keysPressed['ArrowLeft'] || keysPressed['a']) {
+                    movementDirection.x = -1; // Left
+                } else if (keysPressed['ArrowRight'] || keysPressed['d']) {
+                    movementDirection.x = 1; // Right
+                }
+
+                // Calculate target rotation based on movement direction
+                let targetRotation = robot.rotation.y;
+                if (movementDirection.x < 0) { // Left
+                    targetRotation = -Math.PI / 2;
+                } else if (movementDirection.x > 0) { // Right
+                    targetRotation = Math.PI / 2;
+                } else if (movementDirection.z < 0) { // Forward
+                    targetRotation = Math.PI;
+                } else if (movementDirection.z > 0) { // Backward
+                    targetRotation = 0;
+                }
+
                 gsap.to(robot.position, {
                     x: targetPosition.x,
                     y: targetPosition.y,
@@ -147,12 +174,10 @@ async function init() {
                     ease: "power1.out"
                 });
 
-                const robotToCamera = new THREE.Vector3().subVectors(camera.position, robot.position);
-                const angle = Math.atan2(robotToCamera.x, robotToCamera.z);
                 gsap.to(robot.rotation, {
-                    y: angle + Math.PI,
-                    duration: 0.1,
-                    ease: "power1.out"
+                    y: targetRotation,
+                    duration: 0.5, // Slower rotation for smoother transitions
+                    ease: "power2.out"
                 });
             } else {
                 // Not moving - return to front-facing position
@@ -171,16 +196,15 @@ async function init() {
                     duration: 0.02,
                 });
 
-                const robotToCamera = new THREE.Vector3().subVectors(camera.position, robot.position);
-                const angle = Math.atan2(robotToCamera.x, robotToCamera.z);
                 gsap.to(robot.rotation, {
-                    y: angle,
-                    duration: 0.02,
+                    y: 0, // Face forward when not moving
+                    duration: 0.5,
+                    ease: "power2.out"
                 });
             }
         }
         
-        updateCameraPosition();
+        updateCamera();
         controls.update();
         renderer.render(scene, camera);
     }
