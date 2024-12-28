@@ -10,5 +10,22 @@ export default defineConfig({
   build: {
     assetsDir: 'assets',
     copyPublicDir: true,
-  }
+    rollupOptions: {
+      input: {
+        main: 'index.html'
+      },
+      output: {
+        assetFileNames: (assetInfo) => {
+          if (!assetInfo.name) return 'assets/[name]-[hash].[ext]';
+          const info = assetInfo.name.split('.');
+          const ext = info[info.length - 1];
+          if (/\.(gltf|bin)$/.test(assetInfo.name)) {
+            return `assets/models/robot/[name].[ext]`;
+          }
+          return `assets/[name]-[hash].[ext]`;
+        }
+      }
+    }
+  },
+  publicDir: 'public'
 });
