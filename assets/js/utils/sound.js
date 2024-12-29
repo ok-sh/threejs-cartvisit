@@ -10,7 +10,7 @@ class SoundManager {
     async init() {
         try {
             this.sound = new Howl({
-                src: ['/sounds/grid-hartzmann.mp3'],
+                src: ['/sounds/echoes_of_neon_dreams.mp3'],
                 loop: true,
                 volume: 0.5,
                 html5: true, // Force HTML5 Audio to help with mobile playback
