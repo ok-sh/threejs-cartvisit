@@ -85,6 +85,12 @@ async function init() {
     let movementTimeout = null;
     let isMoving = false;
     
+    // Function to check if position is within sphere boundary
+    function isWithinSphereBoundary(position, radius = 850) {
+        const distanceFromCenter = position.length();
+        return distanceFromCenter <= radius;
+    }
+    
     // Animation loop
     function animate(currentTime) {
         requestAnimationFrame(animate);
@@ -139,6 +145,13 @@ async function init() {
                 // Keep Y position constant to avoid jumping
                 targetPosition.y = camera.position.y - 5; // Maintain constant offset from camera
                 
+                // Check if target position is within sphere boundary
+                if (!isWithinSphereBoundary(targetPosition)) {
+                    // If outside boundary, normalize the position to the sphere's surface
+                    targetPosition.normalize().multiplyScalar(850);
+                    targetPosition.y = Math.min(Math.max(targetPosition.y, -850), 850); // Clamp Y position
+                }
+                
                 // Get movement direction
                 const movementDirection = new THREE.Vector3();
                 const keysPressed = getKeysPressed();
@@ -153,7 +166,7 @@ async function init() {
                 } else if (keysPressed['ArrowRight'] || keysPressed['d']) {
                     movementDirection.x = 1; // Right
                 }
-
+                
                 // Calculate target rotation based on movement direction
                 let targetRotation = robot.rotation.y;
                 
@@ -184,6 +197,13 @@ async function init() {
                 frontPosition.copy(camera.position);
                 frontPosition.z -= 50;
                 frontPosition.y = camera.position.y - 5; // Keep constant Y offset
+                
+                // Check if front position is within sphere boundary
+                if (!isWithinSphereBoundary(frontPosition)) {
+                    // If outside boundary, normalize the position to the sphere's surface
+                    frontPosition.normalize().multiplyScalar(850);
+                    frontPosition.y = Math.min(Math.max(frontPosition.y, -850), 850); // Clamp Y position
+                }
                 
                 gsap.to(robot.position, {
                     x: frontPosition.x,
