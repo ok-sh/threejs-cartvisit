@@ -156,14 +156,10 @@ async function init() {
 
                 // Calculate target rotation based on movement direction
                 let targetRotation = robot.rotation.y;
-                if (movementDirection.x < 0) { // Left
-                    targetRotation = -Math.PI / 2;
-                } else if (movementDirection.x > 0) { // Right
-                    targetRotation = Math.PI / 2;
-                } else if (movementDirection.z < 0) { // Forward
-                    targetRotation = Math.PI;
-                } else if (movementDirection.z > 0) { // Backward
-                    targetRotation = 0;
+                
+                // Calculate angle based on movement direction
+                if (movementDirection.x !== 0 || movementDirection.z !== 0) {
+                    targetRotation = Math.atan2(movementDirection.x, movementDirection.z);
                 }
 
                 gsap.to(robot.position, {
