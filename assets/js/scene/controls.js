@@ -8,10 +8,10 @@ export function setupControls(camera, renderer) {
   // const controls = new PointerLockControls(camera, renderer.domElement);
   // const controls = new MapControls(camera, renderer.domElement);
   controls.enableDamping = true;
-  // controls.dampingFactor = 0.05;
+  controls.dampingFactor = 0.05;
   // controls.screenSpacePanning = false;
-  // controls.maxDistance = 100000;
-  // controls.maxPolarAngle = Math.PI;
+  controls.maxDistance = 1000;
+  controls.maxPolarAngle = Math.PI
   
   return controls;
 } 

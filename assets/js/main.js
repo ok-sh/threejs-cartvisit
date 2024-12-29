@@ -106,7 +106,6 @@ async function init() {
         if (!hasMovedFirstTime && 
             (!lastCameraPosition.equals(camera.position) || !lastControlsTarget.equals(controls.target))) {
             hasMovedFirstTime = true;
-            console.log('Started robot movement after first camera move');
         }
         
         // Detect if camera is currently moving (either position or orbit controls)
@@ -137,7 +136,8 @@ async function init() {
                 const targetPosition = new THREE.Vector3();
                 targetPosition.copy(camera.position);
                 targetPosition.add(cameraDirection.multiplyScalar(50)); 
-                targetPosition.y = camera.position.y - 1;
+                // Keep Y position constant to avoid jumping
+                targetPosition.y = camera.position.y - 5; // Maintain constant offset from camera
                 
                 // Get movement direction
                 const movementDirection = new THREE.Vector3();
@@ -170,13 +170,13 @@ async function init() {
                     x: targetPosition.x,
                     y: targetPosition.y,
                     z: targetPosition.z,
-                    duration: 0.02,
+                    duration: 0.05,
                     ease: "power1.out"
                 });
 
                 gsap.to(robot.rotation, {
                     y: targetRotation,
-                    duration: 0.5, // Slower rotation for smoother transitions
+                    duration: 0.5,
                     ease: "power2.out"
                 });
             } else {
@@ -187,7 +187,7 @@ async function init() {
                 const frontPosition = new THREE.Vector3();
                 frontPosition.copy(camera.position);
                 frontPosition.z -= 50;
-                frontPosition.y = camera.position.y - 5;
+                frontPosition.y = camera.position.y - 5; // Keep constant Y offset
                 
                 gsap.to(robot.position, {
                     x: frontPosition.x,
