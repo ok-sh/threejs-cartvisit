@@ -8,6 +8,7 @@ const mouse = new THREE.Vector2();
 let INTERSECTED = null;
 const DEFAULT_COLOR = new THREE.Color(0x4e8397);
 const HOVER_BRIGHTNESS = 1.5; // Multiplier for hover brightness
+let score = 0;
 
 export function onMouseMove(event, camera, groupCubes) {
     event.preventDefault();
@@ -92,30 +93,28 @@ export function onInteractionStart(event, camera, groupCubes) {
     const intersects = raycaster.intersectObjects(groupCubes.children);
     
     if (intersects.length > 0) {
-        soundManager.playClick();
         const cube = intersects[0].object;
-        const scaleFactor = isLeftClick ? 1.2 : 0.8;
-        
+        soundManager.playClick();
+
+        // Animate cube disappearance
         gsap.to(cube.scale, {
-            x: cube.scale.x * scaleFactor,
-            y: cube.scale.y * scaleFactor,
-            z: cube.scale.z * scaleFactor,
-            duration: 0.5,
+            x: 0,
+            y: 0,
+            z: 0,
+            duration: 0.3,
+            ease: "back.in",
+            onComplete: () => {
+                groupCubes.remove(cube);
+                cube.geometry.dispose();
+                cube.material.dispose();
+            }
         });
 
-        if (cube.material && cube.material.color) {
-            const randomColor = new THREE.Color(Math.random(), Math.random(), Math.random());
-            const pastelColor = randomColor.lerp(new THREE.Color(1, 1, 1), 0.3);
-            
-            // Store the clicked color in the cube's userData
-            cube.userData.clickedColor = pastelColor;
-
-            gsap.to(cube.material.color, {
-                r: pastelColor.r,
-                g: pastelColor.g,
-                b: pastelColor.b,
-                duration: 0.5,
-            });
+        // Update score
+        score += 10;
+        const scoreDisplay = document.getElementById('score');
+        if (scoreDisplay) {
+            scoreDisplay.textContent = `Score: ${score}`;
         }
     }
 }

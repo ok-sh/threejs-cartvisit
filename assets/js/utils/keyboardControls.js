@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 
 export function setupKeyboardControls(camera, controls) {
-  const moveSpeed = 3.0;
+  const moveSpeed = 1.5;
   const keysPressed = {};
 
   window.addEventListener('keydown', (event) => {

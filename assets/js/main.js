@@ -179,7 +179,7 @@ async function init() {
                     x: targetPosition.x,
                     y: targetPosition.y,
                     z: targetPosition.z,
-                    duration: 0.05,
+                    duration: 0.2,
                     ease: "power1.out"
                 });
 
@@ -209,7 +209,7 @@ async function init() {
                     x: frontPosition.x,
                     y: frontPosition.y,
                     z: frontPosition.z,
-                    duration: 0.02,
+                    duration: 0.2,
                 });
 
                 gsap.to(robot.rotation, {
