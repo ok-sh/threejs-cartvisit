@@ -74,8 +74,6 @@ export function onInteractionStart(event, camera, groupCubes) {
         event.preventDefault();
     }
 
-    const isLeftClick = (event.type === 'mousedown' && event.which === 1) || event.type === 'touchstart';
-    
     // Set up raycaster
     const raycaster = new THREE.Raycaster();
     const mouse = new THREE.Vector2();
